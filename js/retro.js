@@ -1,5 +1,7 @@
 const cardContainer = document.getElementById('card-container');
 
+let count = 0;
+
 fetch(`https://openapi.programming-hero.com/api/retro-forum/latest-posts`)
 .then(res => res.json())
 .then(data => {
@@ -44,10 +46,12 @@ async function allPosts (){
 
 function allData(element){
     const allPostsContainer = document.getElementById('all-posts-container');
-    const postContainer = document.getElementById('post-container');
+    // const postContainer = document.getElementById('post-container');
 
     element.forEach(property => {
 
+    const postContainer = document.createElement('div');
+    postContainer.classList = `lg:flex gap-4 border-2 rounded-3xl bg-[#797DFC1A] p-8 mb-4`;
     postContainer.innerHTML = `
     <img class="w-[50px] h-max rounded-2xl" src="${property.image}" alt="">
     <div class="w-full">
@@ -69,15 +73,32 @@ function allData(element){
                     <p>${property.posted_time} min</p>
                 </div>
             </div>
-            <img src="images/Vector (1).svg" alt="">
+            <img onclick="showPopUp('${property.title}', '${property.view_count}')" src="images/Vector (1).svg" alt="">
         </div>
     </div>
     `
     allPostsContainer.appendChild(postContainer);
 
-    })
+    })   
+}
 
+function showPopUp(title, view_count){
+    console.log(title);
+    const readingNumber = document.getElementById('reading');
+    count++;
+    readingNumber.innerText = count;
+    const popUpContainer = document.getElementById('popup-container');
     
+    const popUp = document.createElement('div');
+    popUp.classList = `flex justify-between items-center rounded-3xl bg-[#FFFFFF] p-8 mt-4`;
+    popUp.innerHTML = `
+    <h2 class="font-bold lg:text-lg">${title}</h2>
+    <div class="flex gap-2">
+        <img src="images/Vector (3).svg" alt="">
+        <p>${view_count}</p>
+    </div>
+    `
+    popUpContainer.appendChild(popUp);
 }
 
 allPosts();
