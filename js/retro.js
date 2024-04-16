@@ -5,7 +5,7 @@ fetch(`https://openapi.programming-hero.com/api/retro-forum/latest-posts`)
 .then(data => {
     const postsData = data;
     postsData.forEach(element => {
-        console.log(element.cover_image);
+        console.log(element);
         showCards(element);
     });
 })
@@ -34,3 +34,50 @@ function showCards(element){
     </div>
     `
 }
+
+async function allPosts (){
+    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`);
+    const data = await res.json();
+    console.log(data.posts);
+    allData(data.posts);
+}
+
+function allData(element){
+    const allPostsContainer = document.getElementById('all-posts-container');
+    const postContainer = document.getElementById('post-container');
+
+    element.forEach(property => {
+
+    postContainer.innerHTML = `
+    <img class="w-[50px] h-max rounded-2xl" src="${property.image}" alt="">
+    <div class="w-full">
+        <p class="text-[#12132D99] font-bold pb-4 mt-4 lg:mt-0"><span class="mr-8"># ${property.category}</span><span>Author : ${property.author.name}</span></p>
+        <h2 class="font-bold text-lg">${property.title}</h2>
+        <p class="text-[#12132D99] border-b-2 border-dashed py-4">${property.description}</p>
+        <div class="flex justify-between items-center mt-4">
+            <div class="flex gap-4 text-[#12132D99]">
+                <div class="flex gap-2">
+                    <img src="images/Vector (2).svg" alt="">
+                    <p>${property.comment_count}</p>
+                </div>
+                <div class="flex gap-2">
+                    <img src="images/Vector (3).svg" alt="">
+                    <p>${property.view_count}</p>
+                </div>
+                <div class="flex gap-2">
+                    <img src="images/Vector (4).svg" alt="">
+                    <p>${property.posted_time} min</p>
+                </div>
+            </div>
+            <img src="images/Vector (1).svg" alt="">
+        </div>
+    </div>
+    `
+    allPostsContainer.appendChild(postContainer);
+
+    })
+
+    
+}
+
+allPosts();
