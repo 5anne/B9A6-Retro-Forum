@@ -18,12 +18,12 @@ function allData(element1) {
         postContainer.classList = `lg:flex gap-4 border-2 rounded-3xl bg-[#797DFC1A] p-8 mb-4`;
         postContainer.innerHTML = `
         <div class="indicator">
-            <span id="badge-color" class="indicator-item badge badge-success badge-xs border-white"></span>
+            <span id="badge-color${property.id}" class="badge-color indicator-item badge badge-success badge-xs border-white"></span>
             <img class="w-[60px] h-max rounded-xl" src="${property.image}" alt="">
         </div>
     
         <div class="w-full">
-            <p class="text-[#12132D99] font-bold pb-4 mt-4 lg:mt-0">#<span id="category-holder" class="mr-8">${property.category}</span><span>Author : ${property.author.name}</span></p>
+            <p class="text-[#12132D99] font-bold pb-4 mt-4 lg:mt-0">#<span class="mr-8">${property.category}</span><span>Author : ${property.author.name}</span></p>
             <h2 class="font-bold text-lg">${property.title}</h2>
             <p class="text-[#12132D99] border-b-2 border-dashed py-4">${property.description}</p>
             <div class="flex justify-between items-center mt-4">
@@ -45,26 +45,25 @@ function allData(element1) {
             </div>
         </div>
     `
-        // setBadgeColor(property.isActive);
+        setBadgeColor(property.isActive);
 
         allPostsContainer.appendChild(postContainer);
     }
-
-    // console.log(property.isActive);
 }
 
-// function setBadgeColor(value){
-//     const badgeColor = document.getElementById('badge-color');
-//     console.log(value);
-//     if(!value){
-//         badgeColor.classList.remove = "badge-success";
-//         badgeColor.classList.add = "badge-error";
-//     }
-//     else{
-//         badgeColor.classList.remove = "badge-error";
-//         badgeColor.classList.add = "badge-success";
-//     }
-// }
+function setBadgeColor(value){
+    const badgeColor = document.getElementsByClassName('badge-color${}');
+    console.log(badgeColor);
+    console.log(value);
+    if(!value){
+        badgeColor.classList.remove('badge-success');
+        badgeColor.classList.add('badge-error');
+    }
+    else{
+        badgeColor.classList.remove('badge-error');
+        badgeColor.classList.add('badge-success');
+    }
+}
 
 function showPopUp(title, view_count) {
     // console.log(title);
@@ -89,8 +88,6 @@ function searchCategory() {
     const loadingSpinner = document.getElementById('loading-spinner');
     loadingSpinner.classList.remove('hidden');
 
-    // const categoryHolder = document.getElementById('category-holder');
-
     fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`)
         .then(res => res.json())
         .then(data => {
@@ -111,7 +108,7 @@ function searchCategory2(element2) {
 
     for (const property of element2) {
         if (inputValue === property.category) {
-            console.log('Yes');
+            // console.log('Yes');
             searchData(property);
         }
     }
@@ -134,7 +131,7 @@ function searchData (property)  {
         </div>
     
         <div class="w-full">
-            <p class="text-[#12132D99] font-bold pb-4 mt-4 lg:mt-0">#<span id="category-holder" class="mr-8">${property.category}</span><span>Author : ${property.author.name}</span></p>
+            <p class="text-[#12132D99] font-bold pb-4 mt-4 lg:mt-0">#<span class="mr-8">${property.category}</span><span>Author : ${property.author.name}</span></p>
             <h2 class="font-bold text-lg">${property.title}</h2>
             <p class="text-[#12132D99] border-b-2 border-dashed py-4">${property.description}</p>
             <div class="flex justify-between items-center mt-4">
@@ -166,14 +163,13 @@ fetch(`https://openapi.programming-hero.com/api/retro-forum/latest-posts`)
     .then(data => {
         const postsData = data;
         postsData.forEach(element => {
-            console.log(element);
+            // console.log(element);
             showCards(element);
         });
     })
     .catch(err => console.log(err.message));
 
 function showCards(element) {
-    // console.log(element.cover_image);
     cardContainer.innerHTML += `
     <div id="card-details" class="card bg-base-100 border-2 mb-4 lg:mb-0">
         <figure class="px-10 pt-10">
