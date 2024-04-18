@@ -17,9 +17,6 @@ function allData(element1) {
         const postContainer = document.createElement('div');
         postContainer.classList = `lg:flex gap-4 border-2 rounded-3xl bg-[#797DFC1A] p-8 mb-4`;
         const badgeColorClass = property.isActive ? 'badge-success' : 'badge-error';
-        if(property.id === 104){
-            property.title = "Introduction to Python: A Beginners Guide";
-        }
 
         postContainer.innerHTML = `
         <div class="indicator">
@@ -46,7 +43,7 @@ function allData(element1) {
                         <p>${property.posted_time} min</p>
                     </div>
                 </div>
-                <img onclick="showPopUp('${property.title}', '${property.view_count}', '${property.id}')" src="images/Vector (1).svg" alt="">
+                <img onclick="showPopUp('${property.title.replace("'","@")}', '${property.view_count}')" src="images/Vector (1).svg" alt="">
             </div>
         </div>
     `
@@ -54,11 +51,8 @@ function allData(element1) {
     }
 }
 
-function showPopUp(title, view_count, id) {
+function showPopUp(title, view_count) {
     // console.log(title);
-    if(id === 104){
-        title = "Introduction to Python: A Beginner's Guide";
-    }
     const readingNumber = document.getElementById('reading');
     count++;
     readingNumber.innerText = count;
@@ -68,7 +62,7 @@ function showPopUp(title, view_count, id) {
     postContainer.classList = `flex justify-between items-center rounded-3xl bg-[#FFFFFF] p-8 mt-4`;
     postContainer.innerHTML = `
     
-        <h2 class="font-bold lg:text-lg">${title}</h2>
+        <h2 class="font-bold lg:text-lg">${title.replace("@","'")}</h2>
         <div class="flex gap-2">
             <img src="images/Vector (3).svg" alt="">
             <p>${view_count}</p>
@@ -144,7 +138,7 @@ function searchData (property)  {
                         <p>${property.posted_time} min</p>
                     </div>
                 </div>
-                <img onclick="showPopUp('${property.title}', '${property.view_count}')" src="images/Vector (1).svg" alt="">
+                <img onclick="showPopUp('${property.title.replace("'","@")}', '${property.view_count}')" src="images/Vector (1).svg" alt="">
             </div>
         </div>
     `
