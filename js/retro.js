@@ -16,9 +16,14 @@ function allData(element1) {
     for (const property of element1) {
         const postContainer = document.createElement('div');
         postContainer.classList = `lg:flex gap-4 border-2 rounded-3xl bg-[#797DFC1A] p-8 mb-4`;
+        const badgeColorClass = property.isActive ? 'badge-success' : 'badge-error';
+        if(property.id === 104){
+            property.title = "Introduction to Python: A Beginners Guide";
+        }
+
         postContainer.innerHTML = `
         <div class="indicator">
-            <span id="badge-color${property.id}" class="badge-color indicator-item badge badge-success badge-xs border-white"></span>
+            <span class="${badgeColorClass} indicator-item badge badge-xs border-white"></span>
             <img class="w-[60px] h-max rounded-xl" src="${property.image}" alt="">
         </div>
     
@@ -41,47 +46,36 @@ function allData(element1) {
                         <p>${property.posted_time} min</p>
                     </div>
                 </div>
-                <img onclick="showPopUp('${property.title}', '${property.view_count}')" src="images/Vector (1).svg" alt="">
+                <img onclick="showPopUp('${property.title}', '${property.view_count}', '${property.id}')" src="images/Vector (1).svg" alt="">
             </div>
         </div>
     `
-        setBadgeColor(property.isActive);
-
         allPostsContainer.appendChild(postContainer);
     }
 }
 
-function setBadgeColor(value){
-    const badgeColor = document.getElementsByClassName('badge-color${}');
-    console.log(badgeColor);
-    console.log(value);
-    if(!value){
-        badgeColor.classList.remove('badge-success');
-        badgeColor.classList.add('badge-error');
-    }
-    else{
-        badgeColor.classList.remove('badge-error');
-        badgeColor.classList.add('badge-success');
-    }
-}
-
-function showPopUp(title, view_count) {
+function showPopUp(title, view_count, id) {
     // console.log(title);
+    if(id === 104){
+        title = "Introduction to Python: A Beginner's Guide";
+    }
     const readingNumber = document.getElementById('reading');
     count++;
     readingNumber.innerText = count;
-    const popUpContainer = document.getElementById('popup-container');
 
-    const popUp = document.createElement('div');
-    popUp.classList = `flex justify-between items-center rounded-3xl bg-[#FFFFFF] p-8 mt-4`;
-    popUp.innerHTML = `
-    <h2 class="font-bold lg:text-lg">${title}</h2>
-    <div class="flex gap-2">
-        <img src="images/Vector (3).svg" alt="">
-        <p>${view_count}</p>
-    </div>
+    const popUpContainer = document.getElementById('popup-container');
+    const postContainer = document.createElement('div');
+    postContainer.classList = `flex justify-between items-center rounded-3xl bg-[#FFFFFF] p-8 mt-4`;
+    postContainer.innerHTML = `
+    
+        <h2 class="font-bold lg:text-lg">${title}</h2>
+        <div class="flex gap-2">
+            <img src="images/Vector (3).svg" alt="">
+            <p>${view_count}</p>
+        </div>
+
     `
-    popUpContainer.appendChild(popUp);
+    popUpContainer.appendChild(postContainer);
 }
 
 function searchCategory() {
@@ -124,9 +118,10 @@ function searchData (property)  {
     allPostsContainer2.classList.remove('hidden');
     const postContainer = document.createElement('div');
     postContainer.classList = `lg:flex gap-4 border-2 rounded-3xl bg-[#797DFC1A] p-8 mb-4`;
+    const badgeColorClass = property.isActive ? 'badge-success' : 'badge-error';
     postContainer.innerHTML = `
         <div class="indicator">
-            <span id="badge-color" class="indicator-item badge badge-success badge-xs border-white"></span>
+            <span class="${badgeColorClass} indicator-item badge badge-xs border-white"></span>
             <img class="w-[60px] h-max rounded-xl" src="${property.image}" alt="">
         </div>
     
